@@ -13,6 +13,38 @@
   <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PMER0NPR1D"></script> -->
   <!-- <script src="js/gotag.js"></script>
   <script src="js/gtag.js"></script> -->
+  <style>
+    .columns.is-multiline {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    
+    .column.is-4 {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .card-image {
+      flex-shrink: 0;
+    }
+    
+    .card-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    
+    .card-content p {
+      margin-bottom: 1rem; 
+    }
+  </style>
 </head>
 
 <body>
@@ -77,6 +109,53 @@
         When I am not coding, you will find me exploring the latest trends in tech or playing cricket, pickleball, or volleyball. I am also an avid traveler, a nature enthusiast, and a big foodie!
       </p>
 
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Projects</h1>
+      <hr />
+      <div class="columns is-multiline">
+        <div class="column is-4">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-256x256">
+                <img src="img/aivirtualwardrobe.jpg" alt="Project 1">
+              </figure>
+            </div>
+            <div class="card-content">
+              <p class="title is-5">AI Virtual Wardrobe</p>
+              <p>Developed a virtual wardrobe using AI, achieving high-accuracy garment detection and posture estimation. It helps users visualize outfits and plan their wardrobe with high accuracy. <br><a href="https://github.com/jayneel-shah18/AI-Virtual-Wardrobe" target="_blank">Link to Repository</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="column is-4">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-256x256">
+                <img src="img/cyberguard.png" alt="Project 1">
+              </figure>
+            </div>
+            <div class="card-content">
+              <p class="title is-5">Dark Web CyberGuard Detection System</p>
+              <p>Developed a cybersecurity tool to detect high-risk websites. It has a dual-mode interface for web scraping and user-customized fraud detection. <br><a href="https://github.com/jayneel-shah18/HackNUThon4.0-Team_Chaos" target="_blank">Link to Repository</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="column is-4">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-256x256">
+                <img src="img/coindrop.png" alt="Project 1">
+              </figure>
+            </div>
+            <div class="card-content">
+              <p class="title is-5">CoinDrop</p>
+              <p>Created an intuitive simulation dashboard that lets you effortlessly track your portfolio, stay updated with the latest news, and make smart investment choices with ease. <a href="https://devfolio.co/projects/coindrop-320a" target="_blank">Link to Repository</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
   <section class="section">
