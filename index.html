@@ -28,36 +28,473 @@
   <!-- Favicon -->
   <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
   <!-- Styles & Scripts -->
   <link rel="stylesheet" href="css/main.bundle.css" />
   <script src="https://kit.fontawesome.com/4e5a72c756.js" crossorigin="anonymous"></script>
 
   <!-- Custom Styles -->
   <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+      --secondary-gradient: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+      --accent-color: #3b82f6;
+      --text-dark: #1f2937;
+      --text-light: #6b7280;
+      --bg-light: #f9fafb;
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --card-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    * {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Enhanced Navbar */
+    .navbar.is-primary {
+      background: var(--primary-gradient) !important;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-item:hover {
+      transform: translateY(-2px);
+      transition: transform 0.3s ease;
+    }
+
+    /* Hero Section */
+    .hero.is-primary {
+      background: var(--primary-gradient);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero.is-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)" /></svg>');
+      opacity: 0.3;
+    }
+
+    .hero-body {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 1.5rem;
+    }
+
+    .profile-image-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .profile-image-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      background: linear-gradient(45deg, #fff, transparent);
+      border-radius: 50%;
+      z-index: -1;
+      animation: rotate 3s linear infinite;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .hero .image img {
+      border: 4px solid white;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .hero .image img:hover {
+      transform: scale(1.05);
+    }
+
+    .hero .title.is-1 {
+      font-weight: 800;
+      letter-spacing: -1px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1.5rem !important;
+    }
+
+    .hero .subtitle {
+      font-size: 1.3rem;
+      font-weight: 300;
+      opacity: 0.95;
+      margin-bottom: 1rem !important;
+    }
+
+    .role-rotation {
+      display: block;
+      min-height: 2rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #ffd700;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+      margin-bottom: 1rem;
+    }
+
+    /* CTA Buttons */
+    .cta-buttons {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .button.is-light.is-large {
+      border-radius: 50px;
+      padding: 1.5rem 3rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .button.is-light.is-large:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .button.is-outlined.is-light.is-large {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+    }
+
+    .button.is-outlined.is-light.is-large:hover {
+      background: white;
+      color: var(--accent-color);
+    }
+
+    /* Section Styling */
+    .section {
+      padding: 4rem 1.5rem;
+    }
+
+    .section:nth-child(even) {
+      background: var(--bg-light);
+    }
+
+    .section .title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section .title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--primary-gradient);
+      border-radius: 2px;
+    }
+
+    hr {
+      background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+      height: 2px;
+      border: none;
+      margin: 2rem 0;
+    }
+
+    /* Skills Section */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .skill-category {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+      border-top: 4px solid var(--accent-color);
+    }
+
+    .skill-category:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    .skill-category h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .skill-category h3 i {
+      color: var(--accent-color);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      background: var(--bg-light);
+      color: var(--text-dark);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .skill-tag:hover {
+      background: var(--accent-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Cards */
     .columns.is-multiline {
       display: flex;
       flex-wrap: wrap;
     }
+
     .column.is-4 {
       display: flex;
       flex-direction: column;
     }
+
     .card {
       display: flex;
       flex-direction: column;
       height: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+      border: none;
     }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--card-shadow-hover);
+    }
+
     .card-image {
       flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
     }
+
+    .card-image img {
+      transition: transform 0.5s ease;
+    }
+
+    .card:hover .card-image img {
+      transform: scale(1.1);
+    }
+
     .card-content {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      padding: 1.5rem;
     }
+
     .card-content p {
       margin-bottom: 1rem;
+    }
+
+    .card-content .title {
+      color: var(--text-dark);
+      font-size: 1.3rem !important;
+      margin-bottom: 0.5rem !important;
+    }
+
+    .card-content .title::after {
+      display: none;
+    }
+
+    .card-content a {
+      color: var(--accent-color);
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .card-content a:hover {
+      color: #764ba2;
+      text-decoration: underline;
+    }
+
+    /* Experience Cards */
+    .card-gap {
+      margin-bottom: 1.5rem;
+    }
+
+    .experience-card {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .experience-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--primary-gradient);
+      border-radius: 2px;
+    }
+
+    .media-left img {
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .tags .tag {
+      background: var(--bg-light);
+      color: var(--text-dark);
+      border: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .tags .tag:hover {
+      background: var(--accent-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Education Cards */
+    .education-card {
+      border-left: 4px solid var(--accent-color);
+      border-radius: 8px;
+    }
+
+    /* Contact Section */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .contact-item {
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .contact-item .icon {
+      color: var(--accent-color);
+      transition: all 0.3s ease;
+    }
+
+    .contact-item:hover .icon {
+      transform: scale(1.2);
+      color: #764ba2;
+    }
+
+    .media-content .title.is-4 {
+      margin-bottom: 0.5rem !important;
+    }
+
+    .media-content .subtitle.is-6 {
+      margin-top: 0.5rem !important;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--primary-gradient);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 768px) {
+      .hero .title.is-1 {
+        font-size: 2rem;
+      }
+
+      .hero .subtitle {
+        font-size: 1rem;
+      }
+
+      .role-rotation {
+        font-size: 1.2rem;
+        min-height: 1.5rem;
+      }
+
+      .section .title {
+        font-size: 2rem;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Loading Animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-on-scroll {
+      animation: fadeInUp 0.8s ease forwards;
     }
   </style>
 </head>
@@ -88,9 +525,11 @@
       <div class="container">
         <div class="level">
           <div class="level-item has-text-centered">
-            <figure class="image is-128x128">
-              <img class="is-rounded" src="img/profile-pic.png">
-            </figure>
+            <div class="profile-image-wrapper">
+              <figure class="image is-128x128">
+                <img class="is-rounded" src="img/profile-pic.png" alt="Jayneel Shah">
+              </figure>
+            </div>
           </div>
         </div>
         <div class="columns has-text-centered">
@@ -98,9 +537,20 @@
             <h1 class="title is-1">
               Jayneel Shah
             </h1>
-            <h2 class="subtitle">
-              Graduate Student, NC State University, Raleigh
-            </h2>
+            <div class="subtitle">
+              <div class="role-rotation" id="roleText">Software Engineer</div>
+            </div>
+            <p class="subtitle" style="margin-top: 0.5rem;">
+              Graduate Student @ NC State University | Data Researcher @ Charles Aris Inc.
+            </p>
+            <div class="cta-buttons">
+              <a href="#contact" class="button is-light is-large">
+                <span class="icon">
+                  <i class="fas fa-envelope"></i>
+                </span>
+                <span>Get In Touch</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -125,12 +575,83 @@
 
     </div>
   </section>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Skills & Expertise</h1>
+      <hr />
+      <div class="skills-grid">
+        <div class="skill-category fade-in">
+          <h3><i class="fas fa-code"></i> Software Engineering</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">C++</span>
+            <span class="skill-tag">JavaScript/TypeScript</span>
+            <span class="skill-tag">React</span>
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">HTML/CSS</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">REST APIs</span>
+            <span class="skill-tag">Microservices</span>
+          </div>
+        </div>
+
+        <div class="skill-category fade-in">
+          <h3><i class="fas fa-robot"></i> AI & Machine Learning</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">TensorFlow</span>
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">Computer Vision</span>
+            <span class="skill-tag">NLP</span>
+            <span class="skill-tag">Deep Learning</span>
+            <span class="skill-tag">Scikit-learn</span>
+            <span class="skill-tag">OpenCV</span>
+            <span class="skill-tag">Generative AI</span>
+            <span class="skill-tag">Model Deployment</span>
+          </div>
+        </div>
+
+        <div class="skill-category fade-in">
+          <h3><i class="fas fa-chart-line"></i> Data Science & Analytics</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">Apache Spark</span>
+            <span class="skill-tag">Pandas</span>
+            <span class="skill-tag">NumPy</span>
+            <span class="skill-tag">Data Visualization</span>
+            <span class="skill-tag">Tableau</span>
+            <span class="skill-tag">BigQuery</span>
+            <span class="skill-tag">ETL Pipelines</span>
+            <span class="skill-tag">Statistical Analysis</span>
+            <span class="skill-tag">Jupyter</span>
+          </div>
+        </div>
+
+        <div class="skill-category fade-in">
+          <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">AWS</span>
+            <span class="skill-tag">Google Cloud</span>
+            <span class="skill-tag">Linux</span>
+            <span class="skill-tag">GRASS GIS</span>
+            <span class="skill-tag">Salesforce</span>
+            <span class="skill-tag">MongoDB</span>
+            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">CI/CD</span>
+            <span class="skill-tag">Agile</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
       <h1 class="title">Projects</h1>
       <hr />
       <div class="columns is-multiline">
-          <div class="column is-4"> 
+          <div class="column is-4 fade-in"> 
           <div class="card">
             <div class="card-image">
               <figure class="image is-256x256">
@@ -139,46 +660,59 @@
             </div>
             <div class="card-content">
               <p class="title is-5">Community Donation Platform</p>
-              <p>Developed a donation platform with multi-category donations, image upload, and a gamified points system to enhance user engagement. Integrated a GenAI-powered therapy chatbot for real-time mental health support. <br><a href="https://devpost.com/software/phantom-pack" target="_blank">Link to Repository</a></p>
+              <p>Developed a donation platform with multi-category donations, image upload, and a gamified points system to enhance user engagement. Integrated a GenAI-powered therapy chatbot for real-time mental health support.</p>
+              <div>
+                <a href="https://devpost.com/software/phantom-pack" target="_blank">View Project →</a>
+              </div>
             </div>
           </div>
         </div>
-        <div class="column is-4">
+        <div class="column is-4 fade-in">
           <div class="card">
             <div class="card-image">
               <figure class="image is-256x256">
-                <img src="img/aivirtualwardrobe.jpg" alt="Project 1">
+                <img src="img/aivirtualwardrobe.jpg" alt="AI Virtual Wardrobe">
               </figure>
             </div>
             <div class="card-content">
               <p class="title is-5">AI Virtual Wardrobe</p>
-              <p>Designed a virtual wardrobe using AI, achieving high-accuracy garment detection and posture estimation. It helps users visualize outfits and plan their wardrobe with high accuracy. <br><a href="https://github.com/jayneel-shah18/AI-Virtual-Wardrobe" target="_blank">Link to Repository</a> | <a href="https://virtualstylist.app" target="_blank">Live Demo</a></p>
+              <p>Designed a virtual wardrobe using AI, achieving high-accuracy garment detection and posture estimation. It helps users visualize outfits and plan their wardrobe with high accuracy.</p>
+              <div>
+                <a href="https://github.com/jayneel-shah18/AI-Virtual-Wardrobe" target="_blank">GitHub →</a> | 
+                <a href="https://virtualstylist.app" target="_blank">Live Demo →</a>
+              </div>
             </div>
           </div>
         </div>
-        <div class="column is-4">
+        <div class="column is-4 fade-in">
           <div class="card">
             <div class="card-image">
               <figure class="image is-256x256">
-                <img src="img/cyberguard.png" alt="Project 1">
+                <img src="img/cyberguard.png" alt="CyberGuard Detection System">
               </figure>
             </div>
             <div class="card-content">
               <p class="title is-5">Dark Web CyberGuard Detection System</p>
-              <p>Developed a cybersecurity tool to detect high-risk websites. It has a dual-mode interface for web scraping and user-customized fraud detection. <br><a href="https://github.com/jayneel-shah18/HackNUThon4.0-Team_Chaos" target="_blank">Link to Repository</a></p>
+              <p>Developed a cybersecurity tool to detect high-risk websites. It has a dual-mode interface for web scraping and user-customized fraud detection.</p>
+              <div>
+                <a href="https://github.com/jayneel-shah18/HackNUThon4.0-Team_Chaos" target="_blank">View Project →</a>
+              </div>
             </div>
           </div>
         </div>
-        <div class="column is-4">
+        <div class="column is-4 fade-in">
           <div class="card">
             <div class="card-image">
               <figure class="image is-256x256">
-                <img src="img/coindrop.png" alt="Project 1">
+                <img src="img/coindrop.png" alt="CoinDrop">
               </figure>
             </div>
             <div class="card-content">
               <p class="title is-5">CoinDrop</p>
-              <p>Created an intuitive simulation dashboard that lets you effortlessly track your portfolio, stay updated with the latest news, and make smart investment choices with ease. <a href="https://devfolio.co/projects/coindrop-320a" target="_blank">Link to Repository</a></p>
+              <p>Created an intuitive simulation dashboard that lets you effortlessly track your portfolio, stay updated with the latest news, and make smart investment choices with ease.</p>
+              <div>
+                <a href="https://devfolio.co/projects/coindrop-320a" target="_blank">View Project →</a>
+              </div>
             </div>
           </div>
         </div>
@@ -190,7 +724,7 @@
     <h1 class="title">Experience</h1>
     <hr />
     <!-- Charles Aris Inc. - Data Research Intern -->
-    <div class="card card-gap">
+    <div class="card card-gap fade-in experience-card">
       <div class="card-content">
         <div class="media">
           <div class="media-left">
@@ -200,22 +734,24 @@
           </div>
           <div class="media-content">
             <p class="title is-4">Charles Aris Inc.</p>
-            <p class="subtitle is-6">Data Research Intern [<time datetime="2025">September 2025</time> - Present]</p>
+            <p class="subtitle is-6">Data Research Intern | <time datetime="2025">September 2025</time> - Present</p>
           </div>
         </div>
         <div class="content">
+          <p>Developing AI-powered workflows to automate search processes and enhance data research capabilities.</p>
           <div class="tags">
-            <span class="tag">data research</span>
-            <span class="tag">market analysis</span>
-            <span class="tag">business intelligence</span>
-            <span class="tag">data collection</span>
+            <span class="tag">AI Automation</span>
+            <span class="tag">Data Research</span>
+            <span class="tag">Market Analysis</span>
+            <span class="tag">Business Intelligence</span>
+            <span class="tag">Process Optimization</span>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Center for Geospatial Analytics - Research Assistant -->
-    <div class="card card-gap">
+    <div class="card card-gap fade-in experience-card">
       <div class="card-content">
         <div class="media">
           <div class="media-left">
@@ -225,25 +761,24 @@
           </div>
           <div class="media-content">
             <p class="title is-4">Center for Geospatial Analytics</p>
-            <p class="subtitle is-6">Software Engineer [<time datetime="2025">January 2025</time> - August 2025]</p>
+            <p class="subtitle is-6">Software Engineer | <time datetime="2025">January 2025</time> - August 2025</p>
           </div>
         </div>
         <div class="content">
+          <p>Contributed to open-source GRASS GIS development, improving software quality and implementing geospatial modeling features.</p>
           <div class="tags">
-            <span class="tag">geospatial analytics</span>
+            <span class="tag">Geospatial Analytics</span>
             <span class="tag">GRASS GIS</span>
-            <span class="tag">open-source development</span>
-            <span class="tag">software testing</span>
-            <span class="tag">code quality</span>
-            <span class="tag">geospatial modeling</span>
+            <span class="tag">Open Source</span>
+            <span class="tag">Software Testing</span>
+            <span class="tag">Python</span>
           </div>
         </div>
       </div>
     </div>
 
     <!-- FX is AI - Machine Learning Engineer -->
-    <div class="card card-gap">
-      <div class="card">
+    <div class="card card-gap fade-in experience-card">
         <div class="card-content">
           <div class="media">
             <div class="media-left">
@@ -253,23 +788,24 @@
             </div>
             <div class="media-content">
               <p class="title is-4">FX is AI</p>
-              <p class="subtitle is-6">Machine Learning Engineer [<time datetime="2024">January 2024</time> - <time datetime="2024">May 2024</time>]</p>
+              <p class="subtitle is-6">Machine Learning Engineer | <time datetime="2024">January 2024</time> - <time datetime="2024">May 2024</time></p>
             </div>
           </div>
           <div class="content">
+            <p>Developed computer vision models and AI-powered applications, integrating frontend interfaces for seamless user experiences.</p>
             <div class="tags">
-              <span class="tag">machine learning</span>
-              <span class="tag">computer vision</span>
-              <span class="tag">artificial intelligence</span>
-              <span class="tag">data analysis</span>
-              <span class="tag">frontend</span>
+              <span class="tag">Machine Learning</span>
+              <span class="tag">Computer Vision</span>
+              <span class="tag">AI Development</span>
+              <span class="tag">Frontend Integration</span>
+              <span class="tag">Python</span>
             </div>
           </div>
         </div>
-      </div>
     </div>
+
     <!-- PayPal - Data Analyst Intern -->
-    <div class="card card-gap">
+    <div class="card card-gap fade-in experience-card">
       <div class="card-content">
         <div class="media">
           <div class="media-left">
@@ -279,24 +815,25 @@
           </div>
           <div class="media-content">
             <p class="title is-4">PayPal</p>
-            <p class="subtitle is-6">Data Analyst [<time datetime="2023">June 2023</time> - <time datetime="2023">August 2023</time>]</p>
+            <p class="subtitle is-6">Data Analyst | <time datetime="2023">June 2023</time> - <time datetime="2023">August 2023</time></p>
           </div>
         </div>
         <div class="content">
+          <p>Received Bravo Award for dashboard development. Leveraged data analytics to drive business insights and strategic decision-making.</p>
           <div class="tags">
-            <span class="tag">data analytics</span>
-            <span class="tag">dashboard development</span>
-            <span class="tag">business intelligence</span>
-            <span class="tag">jupyter notebooks</span>
-            <span class="tag">salesforce</span>
-            <span class="tag">big query</span>
+            <span class="tag">Data Analytics</span>
+            <span class="tag">Dashboard Development</span>
+            <span class="tag">Business Intelligence</span>
+            <span class="tag">Jupyter</span>
+            <span class="tag">BigQuery</span>
+            <span class="tag">Salesforce</span>
           </div>
         </div>
       </div>
     </div>
 
     <!-- ISRO - Research Intern -->
-    <div class="card card-gap">
+    <div class="card card-gap fade-in experience-card">
       <div class="card-content">
         <div class="media">
           <div class="media-left">
@@ -305,16 +842,18 @@
             </figure>
           </div>
           <div class="media-content">
-            <p class="title is-4">Indian Space Research Organization</p>
-            <p class="subtitle is-6">Software Developer [<time datetime="2022">June 2022</time> - <time datetime="2023">January 2023</time>]</p>
+            <p class="title is-4">Indian Space Research Organization (ISRO)</p>
+            <p class="subtitle is-6">Software Developer | <time datetime="2022">June 2022</time> - <time datetime="2023">January 2023</time></p>
           </div>
         </div>
         <div class="content">
+          <p>Developed machine learning models for space research applications, utilizing containerization for deployment.</p>
           <div class="tags">
-            <span class="tag">research</span>
-            <span class="tag">python</span>
-            <span class="tag">machine learning</span>
-            <span class="tag">docker</span>
+            <span class="tag">Research</span>
+            <span class="tag">Python</span>
+            <span class="tag">Machine Learning</span>
+            <span class="tag">Docker</span>
+            <span class="tag">Space Tech</span>
           </div>
         </div>
       </div>
@@ -326,7 +865,7 @@
     <div class="container">
       <h1 class="title">Education</h1>
       <hr />
-      <div class="card">
+      <div class="card fade-in education-card">
         <div class="card-content">
           <div class="media">
             <div class="media-left">
@@ -336,14 +875,17 @@
             </div>
             <div class="media-content">
               <p class="title is-4">North Carolina State University</p>
-              <p class="subtitle is-6">Master of Science in Computer Science [<time datetime="2024">2024</time> - <time
-                datetime="2026">Expected 2026</time>]</p>
+              <p class="subtitle is-6">Master of Science in Computer Science | <time datetime="2024">2024</time> - <time
+                datetime="2026">Expected May 2026</time></p>
             </div>
+          </div>
+          <div class="content">
+            <p><strong>Focus:</strong> Software Engineering, Artificial Intelligence, Machine Learning, Data Science</p>
+            <p><strong>Status:</strong> Currently in 3rd semester, actively seeking full-time opportunities for post-graduation</p>
           </div>
         </div>
       </div>
-      <div class="card card-gap">
-        <div class="card">
+      <div class="card card-gap fade-in education-card">
           <div class="card-content">
             <div class="media">
               <div class="media-left">
@@ -353,54 +895,138 @@
               </div>
               <div class="media-content">
                 <p class="title is-4">Nirma University</p>
-                <p class="subtitle is-6">Bachleor of Technology in Computer Science and Engineering [<time datetime="2020">2020</time> - <time
-                  datetime="2024">2024</time>]</p>
+                <p class="subtitle is-6">Bachelor of Technology in Computer Science and Engineering | <time datetime="2020">2020</time> - <time
+                  datetime="2024">2024</time></p>
               </div>
             </div>
+            <div class="content">
+              <p><strong>Achievements:</strong> Strong foundation in computer science fundamentals, data structures, algorithms, and software development</p>
+            </div>
           </div>
-        </div>
+      </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="contact">
     <div class="container">
-      <h1 class="title">Contact</h1>
+      <h1 class="title">Let's Connect</h1>
       <hr />
-      <nav class="level">
-        <div class="level-item has-text-centered">
-          <div>
-            <a href="https://github.com/jayneel-shah18" class="icon is-large">
-              <i class="fab fa-2x fa-github"></i>
-            </a>
-            <p class="heading"><a href="https://github.com/jayneel-shah18">JayneelShah</a></p>
-          </div>
+      <p class="subtitle has-text-centered" style="margin-bottom: 3rem;">
+        I'm actively seeking full-time opportunities in Software Engineering, Data Science, AI/ML, and Data Analytics starting May 2026. Let's talk!
+      </p>
+      <div class="contact-grid">
+        <div class="contact-item fade-in">
+          <a href="https://github.com/jayneel-shah18" target="_blank" class="icon is-large">
+            <i class="fab fa-3x fa-github"></i>
+          </a>
+          <p class="heading" style="margin-top: 1rem;"><a href="https://github.com/jayneel-shah18" target="_blank">GitHub</a></p>
+          <p class="subtitle is-7">@jayneel-shah18</p>
         </div>
-        <div class="level-item has-text-centered">
-          <div>
-            <a href="https://www.linkedin.com/in/jayneel-m-shah/" class="icon is-large">
-              <i class="fab fa-2x fa-linkedin-in"></i>
-            </a>
-            <p class="heading"><a href="https://www.linkedin.com/in/jayneel-m-shah/">JayneelShah</a></p>
-          </div>
+        <div class="contact-item fade-in">
+          <a href="https://www.linkedin.com/in/jayneel-m-shah/" target="_blank" class="icon is-large">
+            <i class="fab fa-3x fa-linkedin-in"></i>
+          </a>
+          <p class="heading" style="margin-top: 1rem;"><a href="https://www.linkedin.com/in/jayneel-m-shah/" target="_blank">LinkedIn</a></p>
+          <p class="subtitle is-7">Jayneel Shah</p>
         </div>
-        <div class="level-item has-text-centered">
-          <div>
-            <a href="mailto:jayneel.shah18@gmail.com" class="icon is-large">
-              <i class="fas fa-2x fa-envelope"></i> 
-            </a>
-            <p class="heading"><a href="mailto:jayneel.shah18@gmail.com"> jayneel.shah18@gmail.com </a></p>
-          </div>
+        <div class="contact-item fade-in">
+          <a href="mailto:jayneel.shah18@gmail.com" class="icon is-large">
+            <i class="fas fa-3x fa-envelope"></i> 
+          </a>
+          <p class="heading" style="margin-top: 1rem;"><a href="mailto:jayneel.shah18@gmail.com">Email</a></p>
+          <p class="subtitle is-7">jayneel.shah18@gmail.com</p>
         </div>
-      </nav>
+      </div>
     </div>
   </section>
   <footer>
-    <p style="text-align: center;">
-      Visitor Count:
-      <img src="https://profile-counter.glitch.me/jayneel-shah18/count.svg" alt="Visitor Count">
-    </p>
+    <div class="container">
+      <p>
+        <strong>Jayneel Shah</strong> &copy; 2025 | Built with passion and code
+      </p>
+    </div>
   </footer>
+
   <script src="js/bundle.js"></script>
+  <script>
+    // Role rotation animation
+    const roles = [
+      'Software Engineer',
+      'Machine Learning Engineer',
+      'Data Scientist',
+      'Data Analyst',
+      'AI/ML Specialist',
+      'Full Stack Developer'
+    ];
+    
+    let currentRoleIndex = 0;
+    const roleElement = document.getElementById('roleText');
+    
+    function rotateRole() {
+      roleElement.style.opacity = '0';
+      
+      setTimeout(() => {
+        currentRoleIndex = (currentRoleIndex + 1) % roles.length;
+        roleElement.textContent = roles[currentRoleIndex];
+        roleElement.style.opacity = '1';
+      }, 500);
+    }
+    
+    // Change role every 3 seconds
+    setInterval(rotateRole, 3000);
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+    
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+    
+    // Observe all fade-in elements
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+    
+    // Add navbar scroll effect
+    let lastScroll = 0;
+    const navbar = document.querySelector('.navbar');
+    
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      
+      if (currentScroll > 100) {
+        navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+      } else {
+        navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+      }
+      
+      lastScroll = currentScroll;
+    });
+
+    // Add transition to role text
+    roleElement.style.transition = 'opacity 0.5s ease-in-out';
+  </script>
 </body>
 
 </html>
